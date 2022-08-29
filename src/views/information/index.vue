@@ -77,7 +77,8 @@
         </el-form>
       </el-row>
       <el-row type="flex" justify="center">
-        <el-button v-show="!showvalue" type="primary" size="small" icon="el-icon-edit" @click="modifyBtn()">编辑</el-button>
+        <el-button v-show="!showvalue" type="primary" size="small" @click="modifyBtn()">编辑</el-button>
+        <el-button v-show="!showvalue" size="small" @click="handleback()">返回</el-button>
         <el-button v-show="showvalue" size="small" @click="cancelBtn()">取消</el-button>
         <el-button v-show="showvalue" type="primary" size="small" @click="Update()">确认</el-button>
       </el-row>
@@ -99,7 +100,7 @@ export default {
   },
   // 转换时间
   filters: {
-    formatDateTime(time) {
+    formatDateTime (time) {
       if (time == null || time === '') {
         return ''
       }
@@ -107,7 +108,7 @@ export default {
       return formatDate(date, 'yyyy-MM-dd')
     }
   },
-  data() {
+  data () {
     return {
       squareUrl: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png',
       form: {
@@ -135,43 +136,48 @@ export default {
       },
       // 时间范围限制
       pickOptions: {
-        disabledDate(time) {
+        disabledDate (time) {
           return time.getTime() > Date.now() - 8.64e6
         }
       }
     }
   },
-  created() {
+  created () {
   },
-  mounted() { },
+  mounted () { },
   methods: {
     // 修改按钮
-    modifyBtn() {
+    modifyBtn () {
       this.showvalue = true
     },
+    handleback () {
+      this.$router.push({
+        path: '/'
+      })
+    },
     // 上传头像
-    async handleFileUpload(val) {
+    async handleFileUpload (val) {
       this.avataLoading = true
     },
     // 头像移除时的钩子
-    handleRemove() {
+    handleRemove () {
       this.squareUrl = ''
       this.$refs['my-upload'].clearFiles()
     },
     // 头像加载失败时
-    errorHandler() {
+    errorHandler () {
       return true
     },
     // 提交修改
-    Update() {
-      this.$refs['form'].validate(async(valid) => {
+    Update () {
+      this.$refs['form'].validate(async (valid) => {
         if (valid) {
           this.loading = true
         }
       })
     },
     // 取消修改
-    cancelBtn() {
+    cancelBtn () {
       this.showvalue = false
     }
   }

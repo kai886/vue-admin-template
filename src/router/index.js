@@ -7,23 +7,27 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
+ * Note: 路由配置项
  *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * hidden: true                     // 当设置 true 的时候该路由不会再侧边栏出现 如401，login等页面，或者如一些编辑页面/edit/1
+ * alwaysShow: true                 // 当你一个路由下面的 children 声明的路由大于1个时，自动会变成嵌套的模式--如组件页面
+ *                                  // 只有一个时，会将那个子路由当做根路由显示在侧边栏--如引导页面
+ *                                  // 若你想不管路由下面的 children 声明的个数都显示你的根路由
+ *                                  // 你可以设置 alwaysShow: true，这样它就会忽略之前定义的规则，一直显示根路由
+ * redirect: noRedirect             // 当设置 noRedirect 的时候该路由在面包屑导航中不可被点击
+ * name:'router-name'               // 设定路由的名字，一定要填写不然使用<keep-alive>时会出现各种问题
+ * query: '{"id": 1, "name": "ry"}' // 访问路由的默认传递参数
+ * roles: ['admin', 'common']       // 访问路由的角色权限
+ * permissions: ['a:a:a', 'b:b:b']  // 访问路由的菜单权限
  * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+    noCache: true                   // 如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
+    title: 'title'                  // 设置该路由在侧边栏和面包屑中展示的名字
+    icon: 'svg-name'                // 设置该路由的图标，对应路径src/assets/icons/svg
+    breadcrumb: false               // 如果设置为false，则不会在breadcrumb面包屑中显示
+    activeMenu: '/system/user'      // 当路由设置了该属性，则会高亮相对应的侧边栏。
   }
  */
+
 
 /**
  * constantRoutes
@@ -56,21 +60,30 @@ export const constantRoutes = [
   },
 
   {
-    path: '/first-level',
+    path: '/table-level',
     component: Layout,
+    redirect: '/table-level/index',
+    name: 'table-level',
+    meta: { title: '表格管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'index',
-        name: 'first-level',
-        component: () => import('@/views/firstlevel/index'),
-        meta: { title: '一级管理', icon: 'form' }
+        name: 'table-level',
+        component: () => import('@/views/tablelevel/index'),
+        meta: { title: 'table' }
       },
       {
-        path: 'detailed-view',
+        path: 'view',
         name: 'detailed-view',
-        component: () => import('@/views/firstlevel/DetailedView/index'),
-        meta: { title: '一级管理查看详情' },
-        hidden: true
+        component: () => import('@/views/tablelevel/DetailedView/index'),
+        meta: { title: '查看详情', activeMenu: '/table-level/index' },
+        hidden: true,
+      },
+      {
+        path: 'package',
+        name: 'package',
+        component: () => import('@/views/tablelevel/package'),
+        meta: { title: 'table封装' },
       }
     ]
   },
@@ -82,12 +95,6 @@ export const constantRoutes = [
     name: 'second-level',
     meta: { title: '二级管理', icon: 'el-icon-s-help' },
     children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/secondlevel/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
       {
         path: 'tree',
         name: 'Tree',
@@ -109,30 +116,10 @@ export const constantRoutes = [
     redirect: '/three-level/menu1',
     name: 'three-level',
     meta: {
-      title: '三级管理',
+      title: '组件管理',
       icon: 'nested'
     },
     children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/threelevel/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/threelevel/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/threelevel/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
       {
         path: 'menu2',
         component: () => import('@/views/threelevel/menu2/index'),
@@ -149,14 +136,15 @@ export const constantRoutes = [
   },
 
   {
-    path: '/person',
+    path: '/information',
     component: Layout,
     children: [
       {
-        path: 'information',
-        name: 'Information',
-        component: () => import('@/views/person/index'),
-        meta: { title: '信息管理', icon: 'el-icon-user-solid' }
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/information/index'),
+        meta: { title: '个人中心', icon: 'el-icon-user-solid' },
+        hidden: true
       }
     ]
   },
@@ -185,7 +173,7 @@ const createRouter = () => new Router({
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter() {
+export function resetRouter () {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }

@@ -56,7 +56,7 @@
 <script>
 export default {
   filters: {
-    statusFilter(status) {
+    statusFilter (status) {
       const statusMap = {
         published: 'success',
         draft: 'gray',
@@ -65,7 +65,7 @@ export default {
       return statusMap[status]
     }
   },
-  data() {
+  data () {
     return {
       SearchList: {},
       tableData: [
@@ -137,28 +137,28 @@ export default {
       }
     }
   },
-  created() {
+  created () {
 
   },
-  mounted() { },
+  mounted () { },
   methods: {
-    handleSearch() {
+    handleSearch () {
       console.log(this.SearchList)
     },
-    handleReset() {
+    handleReset () {
       this.SearchList = {}
     },
-    handleSync() { },
-    handleClick(row) {
+    handleSync () { },
+    handleClick (row) {
       this.$router.push({
-        path: '/form/detailed-view',
+        path: '/table-level/view',
         query: { project: row }
       })
     },
-    handleSizeChange(val) {
+    handleSizeChange (val) {
       this.page.pageSize = val
     },
-    handleCurrentChange(val) {
+    handleCurrentChange (val) {
       this.page.pageNum = val
     }
   }

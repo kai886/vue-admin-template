@@ -25,8 +25,8 @@
           </el-col>
           <el-col :sm="24" :md="12" :lg="12">
             <el-form-item>
-              <el-button :disabled="!run" icon="el-icon-search" type="primary" @click="dealSearch('query')">查询</el-button>
-              <el-button :disabled="!run" icon="el-icon-refresh" @click="dealSearch('reset')">重置</el-button>
+              <el-button icon="el-icon-search" type="primary" @click="dealSearch('query')">查询</el-button>
+              <el-button icon="el-icon-refresh" @click="dealSearch('reset')">重置</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -63,16 +63,11 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       align: 'center',
-      run: true,
       timer: null,
       sexOptions: [
-        {
-          label: '全部',
-          value: 0
-        },
         {
           label: '男',
           value: 1
@@ -82,10 +77,6 @@ export default {
         }
       ],
       marriageOptions: [
-        {
-          label: '全部',
-          value: 0
-        },
         {
           label: '已婚',
           value: 1
@@ -114,37 +105,34 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     this.getTableData()
   },
   methods: {
-    handleSizeChange(val) {
+    handleSizeChange (val) {
       this.pageConfig.size = val
       this.search()
     },
-    handleCurrentChange(val) {
+    handleCurrentChange (val) {
       this.pageConfig.page = val
       this.search()
     },
-    lookDetail(row) {
+    lookDetail (row) {
       this.$emit('showDetail', row)
     },
-    async getTableData() {
-      const { data: { total, records }} = await getList({
-        pageIndex: this.pageConfig.page,
-        pageSize: this.pageConfig.size
-      })
-      this.tableData = records
-      this.pageConfig.total = total
-      this.run = true
+    async getTableData () {
+      // const { data: { total, records } } = await getList({
+      //   pageIndex: this.pageConfig.page,
+      //   pageSize: this.pageConfig.size
+      // })
+      // this.tableData = records
+      // this.pageConfig.total = total
     },
-    search() {
+    search () {
     },
-    dealSearch(type) {
-      if (!this.run) return
+    dealSearch (type) {
       this.timer && clearTimeout(this.timer)
       this.pageConfig.page = 1
-      this.run = false
       switch (type) {
         case 'reset':
           this.resetSearch()
@@ -154,7 +142,7 @@ export default {
           break
       }
     },
-    resetSearch() {
+    resetSearch () {
       this.searchData.gender = ''
       this.searchData.nameOrCode = ''
       this.searchData.married = ''

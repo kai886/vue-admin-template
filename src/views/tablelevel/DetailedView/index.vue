@@ -16,17 +16,17 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       memberData: []
     }
   },
-  created() {
+  created () {
   },
   methods: {
-    backToFather() {
+    backToFather () {
       this.$router.push({
-        path: '/form/index'
+        path: '/table-level/index'
       })
     }
   }

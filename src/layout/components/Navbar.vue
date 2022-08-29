@@ -11,16 +11,18 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
+          <!-- <router-link to="/">
             <el-dropdown-item>
               首页
             </el-dropdown-item>
+          </router-link> -->
+          <router-link to="/information/index">
+            <el-dropdown-item>
+              个人中心
+            </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
+          <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
             <el-dropdown-item disabled>Github</el-dropdown-item>
-          </a>
-          <!-- <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
           </a> -->
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出</span>
@@ -48,10 +50,10 @@ export default {
     ])
   },
   methods: {
-    toggleSideBar() {
+    toggleSideBar () {
       this.$store.dispatch('app/toggleSideBar')
     },
-    async logout() {
+    async logout () {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
