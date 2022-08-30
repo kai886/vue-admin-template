@@ -23,7 +23,8 @@
       </el-form>
     </div>
     <div class="table">
-      <el-table :data="tableData" border height="400" :default-sort="{prop: 'date', order: 'descending'}" :header-cell-style="{background:'rgb(244,247,250)',color:'#606266'}">
+      <el-button @click="exportFile" size="mini" style="margin-bottom: 10px">导出PDF</el-button>
+      <el-table id="pdfDom" :data="tableData" border height="400" :default-sort="{prop: 'date', order: 'descending'}" :header-cell-style="{background:'rgb(244,247,250)',color:'#606266'}">
         <el-table-column label="序号" align="center" width="60" fiexd prop="index">
           <template slot-scope="scope">
             {{ page.pageSize * (page.pageNum - 1) + scope.$index + 1 }}
@@ -54,6 +55,7 @@
   </div>
 </template>
 <script>
+
 export default {
   filters: {
     statusFilter (status) {
@@ -160,7 +162,10 @@ export default {
     },
     handleCurrentChange (val) {
       this.page.pageNum = val
-    }
+    },
+    exportFile () {
+      this.getPdf('pdfDom', '数据统计')
+    },
   }
 }
 </script>

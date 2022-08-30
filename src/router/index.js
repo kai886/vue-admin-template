@@ -136,6 +136,19 @@ export const constantRoutes = [
   },
 
   {
+    path: '/map',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/map/index'),
+        meta: { title: '地图', icon: 'el-icon-s-help' },
+      }
+    ]
+  },
+
+  {
     path: '/information',
     component: Layout,
     children: [

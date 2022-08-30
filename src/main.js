@@ -15,6 +15,13 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import htmlToPdf from '@/utils/exportPdf'
+Vue.use(htmlToPdf)
+
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, {
+  ak: '3axM7xY1moZ2DsrWFO0rCtK8WyukVQCM'   // ak 是在百度地图开发者平台申请的** 详见 http://lbsyun.baidu.com/apiconsole/key */
+})
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -36,7 +43,7 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 Vue.directive('dbClick', {
-  inserted(el, binding) {
+  inserted (el, binding) {
     el.addEventListener('click', e => {
       if (!el.disabled) {
         el.disabled = true
