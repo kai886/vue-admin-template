@@ -2,7 +2,7 @@
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu :default-active="activeMenu" :collapse="isCollapse" :background-color="variables.menuBg" :text-color="variables.menuText" :unique-opened="false" :active-text-color="variables.menuActiveText" :collapse-transition="false" mode="vertical">
+      <el-menu :default-active="activeMenu" :collapse="isCollapse" :background-color="variables.menuBg" :text-color="variables.menuText" :unique-opened="true" :active-text-color="variables.menuActiveText" :collapse-transition="false" mode="vertical">
         <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
@@ -21,10 +21,10 @@ export default {
     ...mapGetters([
       'sidebar'
     ]),
-    routes() {
+    routes () {
       return this.$router.options.routes
     },
-    activeMenu() {
+    activeMenu () {
       const route = this.$route
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
@@ -33,13 +33,13 @@ export default {
       }
       return path
     },
-    showLogo() {
+    showLogo () {
       return this.$store.state.settings.sidebarLogo
     },
-    variables() {
+    variables () {
       return variables
     },
-    isCollapse() {
+    isCollapse () {
       return !this.sidebar.opened
     }
   }

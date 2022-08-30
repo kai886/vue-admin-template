@@ -149,6 +149,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/websocket',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/websocket/index'),
+        meta: { title: 'websocket', icon: 'el-icon-s-help' },
+      }
+    ]
+  },
+
+
+  {
     path: '/information',
     component: Layout,
     children: [

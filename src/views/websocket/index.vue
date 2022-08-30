@@ -10,7 +10,7 @@ export default {
   data () {
     return {
       websock: null,
-      wsuri: '192.168.124.18:9091/webSocket',//WebSocket的后台地址
+      wsuri: '192.168.96.159:8080/websocket',//WebSocket的后台地址
       actiones: { "name": "小明" },//传入后台的数据
     }
   },
