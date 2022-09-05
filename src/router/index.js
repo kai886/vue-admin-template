@@ -87,6 +87,22 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/form-level',
+    component: Layout,
+    redirect: '/form-level/index',
+    name: 'form-level',
+    meta: { title: '表单管理', icon: 'el-icon-s-help' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/formlevel/index'),
+        meta: { title: 'form', icon: 'form' }
+      }
+    ]
+  },
 
   {
     path: '/second-level',

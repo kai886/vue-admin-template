@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="form">
+      <Search :data="queryData" :field-list="fieldList" />
+    </div>
     <table-list :loading="loading" :table-data="tableData" :table-label="tableLabel" :selection-show='true'>
       <template v-slot:status="sData">
         <span>{{sData.scope.row.status == 1? '正常': '关闭'}}</span>
@@ -12,14 +15,27 @@
 </template>
 
 <script>
-import TableList from "@/components/TableList"
+import TableList from "@/components/Table"
+import Search from "@/components/Search"
+
 export default {
   components: {
-    TableList
+    TableList,
+    Search
   },
   data () {
     return {
       loading: false,
+      queryData: {
+        Name: '',
+        Sex: '',
+        pageNum: 1,
+        pageSize: 10
+      },
+      fieldList: [
+        { label: "名称", type: "input", value: "Name" },
+        { label: "性别", type: "input", value: "Sex" }
+      ],
       tableData: [
         {
           skuName: '苹果',
